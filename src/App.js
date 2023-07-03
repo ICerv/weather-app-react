@@ -3,6 +3,7 @@ import "./App.css";
 import { WeatherCurrent } from "./components/WeatherCurrent";
 import WeatherForecast from "./components/WeatherForecast";
 import { filterForecast } from "./utils";
+// import { cities } from "./utils";
 
 const App = () => {
   const [weather, setWeather] = useState(null);
@@ -46,6 +47,22 @@ const App = () => {
         <h1>My Weather App</h1>
         <div className="weather">
         <WeatherCurrent weather={weather} />
+
+        {/* <div className="select-wrapper">
+            <select
+              className="select"
+              name="cityselect"
+              id="cityselect"
+              value={city}
+              onChange={handleCityChange}
+            >
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div> */}
 
           {/* Tlačítka pro změnu města */}
           <div className="button-group">
