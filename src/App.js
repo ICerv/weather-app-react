@@ -2,10 +2,35 @@ import React, {useState, useEffect} from "react";
 import "./App.css";
 import { WeatherCurrent } from "./components/WeatherCurrent";
 
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const App = () => {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("Prague"); 
-  const [forecast, setForecast] = useState([]);
+  const [forecast, setForecast] = useState(null);
 
 
   const handleCityChange = (newCity) => {
@@ -14,6 +39,11 @@ const App = () => {
 
   const filterForecast = (array) => {
     return array.filter((_, index) => index % 8 === 0);
+  };
+
+  const getDayfromUnix = (unix) => {
+    const date = new Date(unix * 1000);
+    return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]}`;
   };
 
 
