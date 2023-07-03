@@ -1,31 +1,8 @@
 import React, {useState, useEffect} from "react";
 import "./App.css";
 import { WeatherCurrent } from "./components/WeatherCurrent";
-
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import WeatherForecast from "./components/WeatherForecast";
+import { filterForecast } from "./utils";
 
 const App = () => {
   const [weather, setWeather] = useState(null);
@@ -36,16 +13,6 @@ const App = () => {
   const handleCityChange = (newCity) => {
     setCity(newCity);
   };
-
-  const filterForecast = (array) => {
-    return array.filter((_, index) => index % 8 === 0);
-  };
-
-  const getDayfromUnix = (unix) => {
-    const date = new Date(unix * 1000);
-    return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]}`;
-  };
-
 
   useEffect(() => {
     const API_KEY = process.env.REACT_APP_MY_API_ID;
@@ -86,20 +53,8 @@ const App = () => {
             <button className="button" onClick={() => handleCityChange('Reykjavik')}>Reykjavik</button>
             <button className="button" onClick={() => handleCityChange('Tenerife')}>Tenerife</button>
           </div>
-         
-          <div class="weather__forecast" id="predpoved">
-            <div class="forecast">
-              <div class="forecast__day">Day, date</div>
-              <div class="forecast__icon">
-                {/* <img
-                  src={URL FROM OPEN WEATHER}
-                  style={{ height: "100%" }}
-                  alt="current weather icon"
-                /> */}
-              </div>
-              <div class="forecast__temp">-- °C</div>
-            </div>
-          </div>
+
+          <WeatherForecast forecast={forecast} />
         </div>
       </div>
     </div>
