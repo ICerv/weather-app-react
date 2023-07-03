@@ -4,13 +4,15 @@ import { WeatherCurrent } from "./components/WeatherCurrent";
 
 const App = () => {
   const [weather, setWeather] = useState(null);
+  const [city, setCity] = useState("Prague"); 
 
 
-  const fetchWeather = () => {
+
+  const fetchWeather = (cityToFetch) => {
     const API_KEY = process.env.REACT_APP_MY_API_ID;
-    const city = "Prague"; 
+    // const city = "Prague"; 
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityToFetch}&units=metric&appid=${API_KEY}`)
       .then((response) => response.json())
       .then((data) => {
         setWeather(data);
@@ -22,9 +24,12 @@ const App = () => {
 
 
   useEffect(() => {
-    fetchWeather();
-  }, []);
+    fetchWeather(city);
+  }, [city]);
 
+  const handleCityChange = (newCity) => {
+    setCity(newCity);
+  }
 
   return (
     <div className="App">
@@ -33,11 +38,12 @@ const App = () => {
         <div className="weather">
         <WeatherCurrent weather={weather} />
 
-          {/* <div className="button-group">
-            <button className="button">City01</button>
-            <button className="button">City02</button>
-            <button className="button">City03</button>
-          </div> */}
+          {/* Tlačítka pro změnu města */}
+          <div className="button-group">
+            <button className="button" onClick={() => handleCityChange('City01')}>City01</button>
+            <button className="button" onClick={() => handleCityChange('City02')}>City02</button>
+            <button className="button" onClick={() => handleCityChange('City03')}>City03</button>
+          </div>
          
           <div class="weather__forecast" id="predpoved">
             <div class="forecast">
