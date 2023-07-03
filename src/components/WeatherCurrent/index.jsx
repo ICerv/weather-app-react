@@ -12,8 +12,13 @@ export const WeatherCurrent = ({ weather }) => {
   if (!weather) {
     return <p>Loading...</p>;
   }
+
+  const isCold = weather.main.temp < 10;
+
   return (
-    <div className="weather__current">
+    <div
+      className={`weather__current ${isCold ? 'weather__current--cold' : ''}`}
+    >
       {weather ? (
         <>
           <h2 className="weather__city" id="mesto">
