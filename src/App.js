@@ -5,10 +5,17 @@ import { WeatherCurrent } from "./components/WeatherCurrent";
 const App = () => {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("Prague"); 
+  const [forecast, setForecast] = useState([]);
+
 
   const handleCityChange = (newCity) => {
     setCity(newCity);
   };
+
+  const filterForecast = (array) => {
+    return array.filter((_, index) => index % 8 === 0);
+  };
+
 
   useEffect(() => {
     const API_KEY = process.env.REACT_APP_MY_API_ID;
@@ -22,7 +29,19 @@ const App = () => {
       .catch((error) => {
         console.log("Error loading weather data:", error);
       });
-    }, [city]);
+
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const filteredForecast = filterForecast(data.list);
+      setForecast(filteredForecast);
+      console.log(filteredForecast);
+    })
+    .catch((error) => {
+      console.log("Error loading forecast data:", error);
+    });
+  }, [city]);
+
 
   return (
     <div className="App">
