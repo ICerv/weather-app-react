@@ -3,7 +3,7 @@ import "./App.css";
 import { WeatherCurrent } from "./components/WeatherCurrent";
 import WeatherForecast from "./components/WeatherForecast";
 import { filterForecast } from "./utils";
-// import { cities } from "./utils";
+import { cities } from "./utils";
 
 const App = () => {
   const [weather, setWeather] = useState(null);
@@ -11,13 +11,13 @@ const App = () => {
   const [forecast, setForecast] = useState(null);
 
 
-  const handleCityChange = (newCity) => {
+  const handleCityChange = (event) => {
+    const newCity = event.target.value;
     setCity(newCity);
   };
 
   useEffect(() => {
     const API_KEY = process.env.REACT_APP_MY_API_ID;
-    // const city = "Prague"; 
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
       .then((response) => response.json())
@@ -48,7 +48,7 @@ const App = () => {
         <div className="weather">
         <WeatherCurrent weather={weather} />
 
-        {/* <div className="select-wrapper">
+        <div className="select-wrapper">
             <select
               className="select"
               name="cityselect"
@@ -56,20 +56,21 @@ const App = () => {
               value={city}
               onChange={handleCityChange}
             >
+              <option value="--">city</option>
               {cities.map((city) => (
                 <option key={city} value={city}>
                   {city}
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
 
-          {/* Tlačítka pro změnu města */}
+          {/* Tlačítka pro změnu města
           <div className="button-group">
             <button className="button" onClick={() => handleCityChange('Prague')}>Prague</button>
             <button className="button" onClick={() => handleCityChange('Reykjavik')}>Reykjavik</button>
             <button className="button" onClick={() => handleCityChange('Tenerife')}>Tenerife</button>
-          </div>
+          </div> */}
 
           <WeatherForecast forecast={forecast} />
         </div>
